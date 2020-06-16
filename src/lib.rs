@@ -1,12 +1,13 @@
 //! # urbit-q
 //!
-//! Based on [urbit-ob](https://github.com/urbit/urbit-ob), supports only the `@q` format.
+//! Based on [urbit-ob](https://github.com/urbit/urbit-ob), supports only the
+//! `@q` format.
 //!
 //! ## usage
 //!
-//! Note that when encoding more than one byte, `encode` pads from the beginning to
-//! an even number (as per the original implementation) and `decode` ignores any
-//! dashes or spaces within the string.
+//! Note that when encoding more than one byte, `encode` pads from the beginning
+//! to an even number of bytes (as per the original implementation) and `decode`
+//! ignores any dashes or spaces within the string.
 //! ```rust
 //! urbit_q::encode(&[1]); // nec
 //! let string = urbit_q::encode(&[1, 2, 3]); // doznec-binwes
@@ -20,12 +21,13 @@ mod consts;
 
 /// Encodes data to Urbit's `@q` format
 ///
-/// Note that it pads the beginning to an even number of bytes (as per the
-/// original implementation, [urbit-ob](https://github.com/urbit/urbit-ob)), e.g.
+/// Note that when encoding more than one byte, it  pads from the beginning to
+/// an even number of bytes (as per the original implementation,
+/// [urbit-ob](https://github.com/urbit/urbit-ob)), e.g.
 /// ```
 /// # use urbit_q::*;
-/// let bytes: [u8; 3] = [1, 2, 3];
-/// let string = encode(&bytes); // doznec-binwes
+/// encode(&[1]); // nec
+/// let string = encode(&[1, 2, 3]); // doznec-binwes
 /// decode(&string).unwrap(); // [0, 1, 2, 3]
 /// ```
 pub fn encode(input: &[u8]) -> String {
