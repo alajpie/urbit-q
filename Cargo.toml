@@ -1,13 +1,13 @@
 [package]
 name = "urbit-q"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["k2l8m11n2"]
 edition = "2018"
 description = "Encode and decode data in Urbit's @q format"
 readme = "README.md"
 repository = "https://github.com/k2l8m11n2/urbit-q"
 license = "MIT"
-keyword = ["urbit", "encoding"]
+keywords = ["urbit", "encoding"]
 categories = ["encoding"]
 
 [dependencies]
