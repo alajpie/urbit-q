@@ -38,17 +38,18 @@ pub fn encode(input: &[u8]) -> String {
         output.push_str(consts::PREFIXES[0]);
     }
     let mut dashes_placed = 0;
-    for pair in input.rchunks(2).rev() {
-        match pair.len() {
-            1 => {
-                output.push_str(consts::SUFFIXES[pair[0] as usize]);
-            }
-            2 => {
-                output.push_str(consts::PREFIXES[pair[0] as usize]);
-                output.push_str(consts::SUFFIXES[pair[1] as usize]);
-            }
-            _ => unreachable!(),
+    let iter = input.rchunks_exact(2);
+    let remainder = iter.remainder();
+    if remainder.len() != 0 {
+        output.push_str(consts::SUFFIXES[remainder[0] as usize]);
+        if dashes_placed != dashes {
+            output.push('-');
+            dashes_placed += 1;
         }
+    }
+    for pair in iter.rev() {
+        output.push_str(consts::PREFIXES[pair[0] as usize]);
+        output.push_str(consts::SUFFIXES[pair[1] as usize]);
         if dashes_placed != dashes {
             output.push('-');
             dashes_placed += 1;
