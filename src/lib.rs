@@ -1,5 +1,14 @@
 mod consts;
 
+/// Encodes data to Urbit's `@q` format
+///
+/// Note that it pads the beginning to an even number of bytes (as per the
+/// original implementation, [urbit-ob](https://github.com/urbit/urbit-ob)), e.g.
+/// ```
+/// let bytes: [u8, 3] = [1, 2, 3];
+/// let string = encode(bytes); // doznec-binwes
+/// decode(string)?; // [0, 1, 2, 3]
+/// ```
 pub fn encode(input: &[u8]) -> String {
     let should_pad = input.len() % 2 != 0;
     let length = input.len() + should_pad as usize;
@@ -29,6 +38,15 @@ pub fn encode(input: &[u8]) -> String {
     output
 }
 
+/// Decodes data in Urbit's `@q` format
+///
+/// Note that it ignores any dashes or spaces within the string, e.g.
+/// ```
+/// decode("doznec-binwes"); // Some([0, 1, 2, 3])
+/// decode("doz nec bin wes"); // Some([0, 1, 2, 3])
+/// decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+/// decode("hello world"); // None
+/// ```
 pub fn decode(input: &str) -> Option<Vec<u8>> {
     if !input.is_ascii() {
         return None;
