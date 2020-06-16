@@ -1,4 +1,8 @@
 # urbit-q
+![](https://img.shields.io/crates/v/urbit-q.svg)
+![](https://docs.rs/urbit-q/badge.svg)
+![](https://travis-ci.org/k2l8m11n2/urbit-q.svg?branch=master)
+
 
 Based on [urbit-ob](https://github.com/urbit/urbit-ob), supports only the `@q` format.
 
