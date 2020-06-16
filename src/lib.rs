@@ -30,6 +30,9 @@ pub fn encode(input: &[u8]) -> String {
 }
 
 pub fn decode(input: &str) -> Option<Vec<u8>> {
+    if !input.is_ascii() {
+        return None;
+    }
     let stripped_input = input.replace(&['-', ' '][..], "");
     if stripped_input.len() % 3 != 0 {
         return None;
@@ -38,7 +41,9 @@ pub fn decode(input: &str) -> Option<Vec<u8>> {
     let mut output: Vec<u8> = Vec::with_capacity(capacity);
     for i in (0..stripped_input.len()).step_by(6) {
         output.push(*consts::PREFIXES_MAP.get(&stripped_input[i..i + 3])?);
-        output.push(*consts::SUFFIXES_MAP.get(&stripped_input[i + 3..i + 6])?);
+        if stripped_input.len() >= i + 6 {
+            output.push(*consts::SUFFIXES_MAP.get(&stripped_input[i + 3..i + 6])?);
+        }
     }
     Some(output)
 }
