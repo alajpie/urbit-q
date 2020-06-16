@@ -1,6 +1,6 @@
 [package]
 name = "urbit-q"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["k2l8m11n2"]
 edition = "2018"
 description = "Encode and decode data in Urbit's @q format"
@@ -15,3 +15,9 @@ phf = { version = "0.8", features = ["macros"] }
 
 [dev-dependencies]
 proptest = "0.10.0"
+rand = "0.7.3"
+criterion = "0.3.2"
+
+[[bench]]
+name = "encdec"
+harness = false
