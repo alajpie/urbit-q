@@ -5,9 +5,10 @@ mod consts;
 /// Note that it pads the beginning to an even number of bytes (as per the
 /// original implementation, [urbit-ob](https://github.com/urbit/urbit-ob)), e.g.
 /// ```
-/// let bytes: [u8, 3] = [1, 2, 3];
-/// let string = encode(bytes); // doznec-binwes
-/// decode(string)?; // [0, 1, 2, 3]
+/// # use urbit_q::*;
+/// let bytes: [u8; 3] = [1, 2, 3];
+/// let string = encode(&bytes); // doznec-binwes
+/// decode(&string).unwrap(); // [0, 1, 2, 3]
 /// ```
 pub fn encode(input: &[u8]) -> String {
     let should_pad = input.len() % 2 != 0;
@@ -42,6 +43,7 @@ pub fn encode(input: &[u8]) -> String {
 ///
 /// Note that it ignores any dashes or spaces within the string, e.g.
 /// ```
+/// # use urbit_q::*;
 /// decode("doznec-binwes"); // Some([0, 1, 2, 3])
 /// decode("doz nec bin wes"); // Some([0, 1, 2, 3])
 /// decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
