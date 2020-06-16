@@ -80,19 +80,20 @@ pub fn decode(input: &str) -> Option<Vec<u8>> {
     if !input.is_ascii() {
         return None;
     }
-    let stripped_input = input.replace(&['-', ' '][..], "");
-    if stripped_input.len() == 3 {
-        return Some(vec![*consts::SUFFIXES_MAP.get(&stripped_input[..])?]);
+    let mut input_bytes = Vec::from(input);
+    input_bytes.retain(|x| *x != ('-' as u8) && *x != (' ' as u8));
+    if input_bytes.len() == 3 {
+        return Some(vec![*consts::SUFFIXES_MAP.get(&input_bytes[..])?]);
     }
-    if stripped_input.len() % 3 != 0 {
+    if input_bytes.len() % 3 != 0 {
         return None;
     }
-    let capacity = stripped_input.len() / 3;
+    let capacity = input_bytes.len() / 3;
     let mut output: Vec<u8> = Vec::with_capacity(capacity);
-    for i in (0..stripped_input.len()).step_by(6) {
-        output.push(*consts::PREFIXES_MAP.get(&stripped_input[i..i + 3])?);
-        if stripped_input.len() >= i + 6 {
-            output.push(*consts::SUFFIXES_MAP.get(&stripped_input[i + 3..i + 6])?);
+    for i in (0..input_bytes.len()).step_by(6) {
+        output.push(*consts::PREFIXES_MAP.get(&input_bytes[i..i + 3])?);
+        if input_bytes.len() >= i + 6 {
+            output.push(*consts::SUFFIXES_MAP.get(&input_bytes[i + 3..i + 6])?);
         }
     }
     Some(output)
