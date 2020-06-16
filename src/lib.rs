@@ -1,6 +1,6 @@
 mod consts;
 
-fn encode(input: &[u8]) -> String {
+pub fn encode(input: &[u8]) -> String {
     let should_pad = input.len() % 2 != 0;
     let length = input.len() + should_pad as usize;
     let dashes = if input.len() > 2 { length / 2 - 1 } else { 0 };
@@ -29,7 +29,7 @@ fn encode(input: &[u8]) -> String {
     output
 }
 
-fn decode(input: &str) -> Option<Vec<u8>> {
+pub fn decode(input: &str) -> Option<Vec<u8>> {
     let stripped_input = input.replace(&['-', ' '][..], "");
     if stripped_input.len() % 3 != 0 {
         return None;
@@ -41,9 +41,4 @@ fn decode(input: &str) -> Option<Vec<u8>> {
         output.push(*consts::SUFFIXES_MAP.get(&stripped_input[i + 3..i + 6])?);
     }
     Some(output)
-}
-
-fn main() {
-    let bytes: [u8; 6] = [1, 2, 3, 4, 5, 6];
-    println!("{:?}", decode(&encode(&bytes)));
 }
