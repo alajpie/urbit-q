@@ -1,7 +1,7 @@
 # urbit-q
-![](https://img.shields.io/crates/v/urbit-q.svg)
-![](https://docs.rs/urbit-q/badge.svg)
-![](https://travis-ci.org/k2l8m11n2/urbit-q.svg?branch=master)
+[![](https://img.shields.io/crates/v/urbit-q.svg)](https://crates.io/crates/urbit-q)
+[![](https://docs.rs/urbit-q/badge.svg)](https://docs.rs/urbit-q)
+[![](https://travis-ci.org/k2l8m11n2/urbit-q.svg?branch=master)](https://travis-ci.org/github/k2l8m11n2/urbit-q)
 
 
 Based on [urbit-ob](https://github.com/urbit/urbit-ob), supports only the `@q` format.
