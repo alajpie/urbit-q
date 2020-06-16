@@ -4,12 +4,12 @@
 //!
 //! ## usage
 //!
-//! Note that `encode` pads the beginning to an even number of bytes (as per the
-//! original implementation) and `decode` ignores any dashes or spaces within the
-//! string.
+//! Note that when encoding more than one byte, `encode` pads from the beginning to
+//! an even number (as per the original implementation) and `decode` ignores any
+//! dashes or spaces within the string.
 //! ```rust
-//! let bytes: [u8; 3] = [1, 2, 3];
-//! let string = urbit_q::encode(&bytes); // doznec-binwes
+//! urbit_q::encode(&[1]); // nec
+//! let string = urbit_q::encode(&[1, 2, 3]); // doznec-binwes
 //! urbit_q::decode(&string).unwrap(); // [0, 1, 2, 3]
 //! urbit_q::decode("doz nec bin wes"); // Some([0, 1, 2, 3])
 //! urbit_q::decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
@@ -29,6 +29,12 @@ mod consts;
 /// decode(&string).unwrap(); // [0, 1, 2, 3]
 /// ```
 pub fn encode(input: &[u8]) -> String {
+    if input.len() == 0 {
+        return String::new();
+    }
+    if input.len() == 1 {
+        return String::from(consts::SUFFIXES[input[0] as usize]);
+    }
     let should_pad = input.len() % 2 != 0;
     let length = input.len() + should_pad as usize;
     let dashes = if input.len() > 2 { length / 2 - 1 } else { 0 };
@@ -73,6 +79,9 @@ pub fn decode(input: &str) -> Option<Vec<u8>> {
         return None;
     }
     let stripped_input = input.replace(&['-', ' '][..], "");
+    if stripped_input.len() == 3 {
+        return Some(vec![*consts::SUFFIXES_MAP.get(&stripped_input[..])?]);
+    }
     if stripped_input.len() % 3 != 0 {
         return None;
     }

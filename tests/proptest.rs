@@ -14,7 +14,7 @@ proptest! {
     #[test]
     fn roundtrip(bytes: Vec<u8>) {
         let mut padded = bytes.clone();
-        if padded.len() % 2 != 0{
+        if padded.len() != 1 && padded.len() % 2 != 0 {
            padded.insert(0, 0);
         }
         let tripped = decode(&encode(&bytes)).unwrap();
