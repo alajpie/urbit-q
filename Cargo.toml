@@ -1,10 +1,14 @@
 [package]
 name = "urbit-q"
 version = "0.1.0"
-authors = ["Alicja <k2l8m11n2@gmail.com>"]
+authors = ["k2l8m11n2"]
 edition = "2018"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "Encode and decode data in Urbit's @q format"
+readme = "README.md"
+repository = "https://github.com/k2l8m11n2/urbit-q"
+license = "MIT"
+keyword = ["urbit", "encoding"]
+categories = ["encoding"]
 
 [dependencies]
 phf = { version = "0.8", features = ["macros"] }
