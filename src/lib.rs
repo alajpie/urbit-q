@@ -7,13 +7,13 @@
 //!
 //! Note that when encoding more than one byte, `encode` pads from the beginning
 //! to an even number of bytes (as per the original implementation) and `decode`
-//! ignores any dashes or spaces within the string.
+//! ignores any dashes, tildes or spaces within the string.
 //! ```rust
 //! urbit_q::encode(&[1]); // nec
 //! let string = urbit_q::encode(&[1, 2, 3]); // doznec-binwes
 //! urbit_q::decode(&string).unwrap(); // [0, 1, 2, 3]
 //! urbit_q::decode("doz nec bin wes"); // Some([0, 1, 2, 3])
-//! urbit_q::decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+//! urbit_q::decode("do-z ne cb~inwes"); // Some([0, 1, 2, 3])
 //! urbit_q::decode("nec-binwes"); // Some([1, 2, 3])
 //! urbit_q::decode("hello world"); // None
 //! ```
@@ -69,18 +69,18 @@ pub fn encode(input: &[u8]) -> String {
 
 /// Decodes data in Urbit's `@q` format
 ///
-/// Note that it ignores any dashes or spaces within the string, e.g.
+/// Note that it ignores any dashes, tildes or spaces within the string, e.g.
 /// ```
 /// # use urbit_q::*;
 /// decode("doznec-binwes"); // Some([0, 1, 2, 3])
 /// decode("doz nec bin wes"); // Some([0, 1, 2, 3])
-/// decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+/// decode("do-z ne cb~inwes"); // Some([0, 1, 2, 3])
 /// decode("nec-binwes"); // Some([1, 2, 3])
 /// decode("hello world"); // None
 /// ```
 pub fn decode(input: &str) -> Option<Vec<u8>> {
     let mut bytes = Vec::from(input);
-    bytes.retain(|x| *x != ('-' as u8) && *x != (' ' as u8));
+    bytes.retain(|x| *x != ('-' as u8) && *x != ('~' as u8) && *x != (' ' as u8));
     if bytes.len() == 3 {
         bytes[0] = *consts::SUFFIXES_MAP.get(&bytes[..])?;
         bytes.truncate(1);

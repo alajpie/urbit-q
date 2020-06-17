@@ -7,7 +7,7 @@ proptest! {
         decode(&s);
     }
     #[test]
-    fn doesnt_crash_ascii(s in "[a-z- ]*") {
+    fn doesnt_crash_ascii(s in "[a-z- ~]*") {
        decode(&s);
     }
 

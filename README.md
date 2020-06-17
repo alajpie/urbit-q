@@ -11,13 +11,13 @@ format.
 
 Note that when encoding more than one byte, `encode` pads from the beginning to
 an even number of bytes (as per the original implementation) and `decode`
-ignores any dashes or spaces within the string.
+ignores any dashes, tildes or spaces within the string.
 ```rust
 urbit_q::encode(&[1]); // nec
 let string = urbit_q::encode(&[1, 2, 3]); // doznec-binwes
 urbit_q::decode(&string).unwrap(); // [0, 1, 2, 3]
 urbit_q::decode("doz nec bin wes"); // Some([0, 1, 2, 3])
-urbit_q::decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+urbit_q::decode("do-z ne cb~inwes"); // Some([0, 1, 2, 3])
 urbit_q::decode("nec-binwes"); // Some([1, 2, 3])
 urbit_q::decode("hello world"); // None
 ```
