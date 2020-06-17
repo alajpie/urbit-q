@@ -81,11 +81,6 @@ pub fn encode(input: &[u8]) -> String {
 pub fn decode(input: &str) -> Option<Vec<u8>> {
     let mut bytes = Vec::from(input);
     bytes.retain(|x| *x != ('-' as u8) && *x != ('~' as u8) && *x != (' ' as u8));
-    if bytes.len() == 3 {
-        bytes[0] = *consts::SUFFIXES_MAP.get(&bytes[..])?;
-        bytes.truncate(1);
-        return Some(bytes);
-    }
     match bytes.len() % 6 {
         0 => {
             for i in (0..bytes.len()).step_by(6) {
