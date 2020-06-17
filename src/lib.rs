@@ -84,15 +84,25 @@ pub fn decode(input: &str) -> Option<Vec<u8>> {
         bytes.truncate(1);
         return Some(bytes);
     }
-    if bytes.len() % 3 != 0 {
-        return None;
-    }
-    for i in (0..bytes.len()).step_by(6) {
-        let j = i / 3;
-        bytes[j] = *consts::PREFIXES_MAP.get(&bytes[i..i + 3])?;
-        if bytes.len() >= i + 6 {
-            bytes[j + 1] = *consts::SUFFIXES_MAP.get(&bytes[i + 3..i + 6])?;
+    match bytes.len() % 6 {
+        0 => {
+            for i in (0..bytes.len()).step_by(6) {
+                let j = i / 3;
+                bytes[j] = *consts::PREFIXES_MAP.get(&bytes[i..i + 3])?;
+                bytes[j + 1] = *consts::SUFFIXES_MAP.get(&bytes[i + 3..i + 6])?;
+            }
         }
+        3 => {
+            for i in (0..bytes.len() - 6).step_by(6) {
+                let j = i / 3;
+                bytes[j] = *consts::PREFIXES_MAP.get(&bytes[i..i + 3])?;
+                bytes[j + 1] = *consts::SUFFIXES_MAP.get(&bytes[i + 3..i + 6])?;
+            }
+            let i = bytes.len() - 3;
+            let j = i / 3;
+            bytes[j] = *consts::SUFFIXES_MAP.get(&bytes[i..i + 3])?;
+        }
+        _ => return None,
     }
     bytes.truncate(bytes.len() / 3);
     Some(bytes)
