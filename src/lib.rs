@@ -77,9 +77,6 @@ pub fn encode(input: &[u8]) -> String {
 /// decode("hello world"); // None
 /// ```
 pub fn decode(input: &str) -> Option<Vec<u8>> {
-    if !input.is_ascii() {
-        return None;
-    }
     let mut input_bytes = Vec::from(input);
     input_bytes.retain(|x| *x != ('-' as u8) && *x != (' ' as u8));
     if input_bytes.len() == 3 {
