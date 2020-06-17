@@ -17,6 +17,7 @@ phf = { version = "0.8", features = ["macros"] }
 proptest = "0.10.0"
 rand = "0.7.3"
 criterion = "0.3.2"
+naughty-strings = "0.2.3"
 
 [[bench]]
 name = "encdec"
