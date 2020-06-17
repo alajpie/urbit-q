@@ -14,6 +14,7 @@
 //! urbit_q::decode(&string).unwrap(); // [0, 1, 2, 3]
 //! urbit_q::decode("doz nec bin wes"); // Some([0, 1, 2, 3])
 //! urbit_q::decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+//! urbit_q::decode("nec-binwes"); // Some([1, 2, 3])
 //! urbit_q::decode("hello world"); // None
 //! ```
 
@@ -74,6 +75,7 @@ pub fn encode(input: &[u8]) -> String {
 /// decode("doznec-binwes"); // Some([0, 1, 2, 3])
 /// decode("doz nec bin wes"); // Some([0, 1, 2, 3])
 /// decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+/// decode("nec-binwes"); // Some([1, 2, 3])
 /// decode("hello world"); // None
 /// ```
 pub fn decode(input: &str) -> Option<Vec<u8>> {

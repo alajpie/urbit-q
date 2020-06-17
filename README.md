@@ -18,5 +18,6 @@ let string = urbit_q::encode(&[1, 2, 3]); // doznec-binwes
 urbit_q::decode(&string).unwrap(); // [0, 1, 2, 3]
 urbit_q::decode("doz nec bin wes"); // Some([0, 1, 2, 3])
 urbit_q::decode("do-z ne cb inwes"); // Some([0, 1, 2, 3])
+urbit_q::decode("nec-binwes"); // Some([1, 2, 3])
 urbit_q::decode("hello world"); // None
 ```
