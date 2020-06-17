@@ -93,14 +93,12 @@ pub fn decode(input: &str) -> Option<Vec<u8>> {
             }
         }
         3 => {
-            for i in (0..bytes.len() - 6).step_by(6) {
+            bytes[0] = *consts::SUFFIXES_MAP.get(&bytes[0..3])?;
+            for i in (3..bytes.len()).step_by(6) {
                 let j = i / 3;
                 bytes[j] = *consts::PREFIXES_MAP.get(&bytes[i..i + 3])?;
                 bytes[j + 1] = *consts::SUFFIXES_MAP.get(&bytes[i + 3..i + 6])?;
             }
-            let i = bytes.len() - 3;
-            let j = i / 3;
-            bytes[j] = *consts::SUFFIXES_MAP.get(&bytes[i..i + 3])?;
         }
         _ => return None,
     }

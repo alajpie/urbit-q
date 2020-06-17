@@ -21,11 +21,16 @@ fn simple() {
     assert_eq!(urbit_q::decode("marbud"), Some(vec![1, 2]));
     assert_eq!(urbit_q::encode(&[1, 2, 3]), "doznec-binwes");
     assert_eq!(urbit_q::decode("doznec-binwes"), Some(vec![0, 1, 2, 3]));
+    assert_eq!(urbit_q::decode("nec-binwes"), Some(vec![1, 2, 3]));
     assert_eq!(urbit_q::encode(&[1, 2, 3, 4]), "marbud-wansev");
     assert_eq!(urbit_q::decode("marbud-wansev"), Some(vec![1, 2, 3, 4]));
     assert_eq!(urbit_q::encode(&[1, 2, 3, 4, 5]), "doznec-binwes-samper");
     assert_eq!(
         urbit_q::decode("doznec-binwes-samper"),
         Some(vec![0, 1, 2, 3, 4, 5])
+    );
+    assert_eq!(
+        urbit_q::decode("nec-binwes-samper"),
+        Some(vec![1, 2, 3, 4, 5])
     );
 }
