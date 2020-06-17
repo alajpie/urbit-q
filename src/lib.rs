@@ -77,21 +77,23 @@ pub fn encode(input: &[u8]) -> String {
 /// decode("hello world"); // None
 /// ```
 pub fn decode(input: &str) -> Option<Vec<u8>> {
-    let mut input_bytes = Vec::from(input);
-    input_bytes.retain(|x| *x != ('-' as u8) && *x != (' ' as u8));
-    if input_bytes.len() == 3 {
-        return Some(vec![*consts::SUFFIXES_MAP.get(&input_bytes[..])?]);
+    let mut bytes = Vec::from(input);
+    bytes.retain(|x| *x != ('-' as u8) && *x != (' ' as u8));
+    if bytes.len() == 3 {
+        bytes[0] = *consts::SUFFIXES_MAP.get(&bytes[..])?;
+        bytes.truncate(1);
+        return Some(bytes);
     }
-    if input_bytes.len() % 3 != 0 {
+    if bytes.len() % 3 != 0 {
         return None;
     }
-    let capacity = input_bytes.len() / 3;
-    let mut output: Vec<u8> = Vec::with_capacity(capacity);
-    for i in (0..input_bytes.len()).step_by(6) {
-        output.push(*consts::PREFIXES_MAP.get(&input_bytes[i..i + 3])?);
-        if input_bytes.len() >= i + 6 {
-            output.push(*consts::SUFFIXES_MAP.get(&input_bytes[i + 3..i + 6])?);
+    for i in (0..bytes.len()).step_by(6) {
+        let j = i / 3;
+        bytes[j] = *consts::PREFIXES_MAP.get(&bytes[i..i + 3])?;
+        if bytes.len() >= i + 6 {
+            bytes[j + 1] = *consts::SUFFIXES_MAP.get(&bytes[i + 3..i + 6])?;
         }
     }
-    Some(output)
+    bytes.truncate(bytes.len() / 3);
+    Some(bytes)
 }
