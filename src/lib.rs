@@ -32,7 +32,7 @@ mod consts;
 /// decode(&string).unwrap(); // [0, 1, 2, 3]
 /// ```
 pub fn encode(input: &[u8]) -> String {
-    if input.len() == 0 {
+    if input.is_empty() {
         return String::new();
     }
     if input.len() == 1 {
@@ -49,7 +49,7 @@ pub fn encode(input: &[u8]) -> String {
     let mut dashes_placed = 0;
     let iter = input.rchunks_exact(2);
     let remainder = iter.remainder();
-    if remainder.len() != 0 {
+    if !remainder.is_empty() {
         output.push_str(consts::SUFFIXES[remainder[0] as usize]);
         if dashes_placed != dashes {
             output.push('-');
@@ -80,7 +80,7 @@ pub fn encode(input: &[u8]) -> String {
 /// ```
 pub fn decode(input: &str) -> Option<Vec<u8>> {
     let mut bytes = Vec::from(input);
-    bytes.retain(|x| *x != ('-' as u8) && *x != ('~' as u8) && *x != (' ' as u8));
+    bytes.retain(|x| *x != b'-' && *x != b'~' && *x != b' ');
     match bytes.len() % 6 {
         0 => {
             for i in (0..bytes.len()).step_by(6) {
