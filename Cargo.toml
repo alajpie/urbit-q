@@ -1,6 +1,6 @@
 [package]
 name = "urbit-q"
-version = "0.3.1"
+version = "0.3.2"
 authors = ["k2l8m11n2"]
 edition = "2018"
 description = "Encode and decode data in Urbit's @q format"
